@@ -1,4 +1,4 @@
-import { finale, future, process, team, values } from "@/content/content";
+import { finale, future, process, values } from "@/content/content";
 import { getPart } from "@/content/parts";
 import { SectionHead } from "../SectionHead";
 import { StatusBadge } from "../StatusBadge";
@@ -115,30 +115,6 @@ export function Values() {
   );
 }
 
-export function Team() {
-  return (
-    <section id="team" tabIndex={-1} aria-labelledby="team-title" className="story-section team">
-      <div className="content-col content-col-right scrim-right">
-        <SectionHead id="team-title" number={team.number} eyebrow={team.eyebrow} title={team.title} />
-        <p className="lead">
-          <Txt>{team.lead}</Txt>
-        </p>
-        <ul className="members">
-          {team.members.map((m, i) => (
-            <li key={i}>
-              <span className="member-name">
-                <Txt>{m.name}</Txt>
-              </span>
-              <span className="member-role">
-                <Txt>{m.role}</Txt>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
 
 export function Final() {
   return (
