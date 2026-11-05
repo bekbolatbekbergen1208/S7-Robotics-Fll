@@ -1,0 +1,4 @@
+node_modules/
+.next/
+caspianguard/out/
+*.tsbuildinfo
