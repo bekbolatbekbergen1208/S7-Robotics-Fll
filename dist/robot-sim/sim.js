@@ -7,7 +7,7 @@ const missions = [
   {name:'Drone Survey', x:145,y:170, rules:[['drone','Дрон больше не касается мата',20],['map','Карта LiDAR полностью перевёрнута, маркер частично в зоне',10,'drone']]},
   {name:'Exploding Seeds',x:350,y:125,rules:[['seeds','Семена отделены от стебля',10,'count',5]]},
   {name:'Flip the Rock',x:550,y:145,rules:[['flag','Исследовательский флаг опущен',20],['rock','Камень возвращён на исходное место',10,'flag']]},
-  {name:'Lucky Leaves',x:775,y:110,rules:[['leaf1','Первый лист полностью отделён от гнезда',10],['leaf2','Второй лист отделён, кузнечик остался в исходном положении',20,'leaf1'],['escaped','Кузнечик полностью покидал местообитание',0],['outside','Кузнечик полностью вне местообитания в конце',0]]},
+  {name:'Lucky Leaves',x:775,y:110,rules:[['leaf1','Первый лист полностью отделён от гнезда',10],['leaf2','Второй лист отделён, кузнечик не покидал местообитание',20,'leaf1'],['escaped','Кузнечик полностью покидал местообитание',0],['outside','Кузнечик полностью вне местообитания в конце',0]]},
   {name:'Reaching Roots',x:1045,y:145,rules:[['root','Корень растения',0,'select',['Не выдвинут','Частично — 10','Полностью — 20']]]},
   {name:'Leafcutter Frenzy',x:230,y:310,rules:[['fragments','Фрагменты в гнезде; муравей касается гнезда',10,'count',6]]},
   {name:'Humongous Fungus',x:440,y:300,rules:[['mycelium','Мицелий полностью выдвинут',20],['connections','Связь с полностью выдвинутым корнем соперника',10,'count',2]]},
@@ -18,7 +18,7 @@ const missions = [
   {name:'Forest Elder',x:410,y:505,rules:[['cane','Трость полностью поднята и касается дерева',20],['tie','Подвязка вокруг столба',10]]},
   {name:'Keystone Species',x:630,y:490,rules:[['species','Вид команды на платформе, молодые деревья подняты',30]]},
   {name:'Seeds of Renewal',x:855,y:495,rules:[['contained','Семена внутри станции',5,'count',6],['touching','Из них касаются мата',5,'count',6]]},
-  {name:'Biocentric Architecture',x:1070,y:490,rules:[['canopy','Гнездовой навес поднят',10],['skylight','Садовый люк полностью внутри',10],['hatch','Компостный люк полностью открыт и касается мата',10],['dock','Причал модели',0,'select',['Шахта','Город','Ферма']]]}
+  {name:'Biocentric Architecture',x:1070,y:490,rules:[['canopy','Гнездовой навес поднят',10],['skylight','Садовый люк полностью внутри',10],['hatch','Компостный люк полностью открыт и касается мата',10],['dock','Причал модели для экологического бонуса',0,'select',['Не выбран','Шахта','Город','Ферма']]]}
 ];
 const initialRobot = {width:180,length:200,wheel:56,track:140,velocity:180,attachment:'fork'};
 const key = 's7-bioglow-lab-v1';
@@ -50,7 +50,7 @@ function scoreMission(i){
   if(i===13) score+=Math.min(Number(v('contained')),Number(v('touching')))*5;
   if(i===14){
     const dock=Number(v('dock'));
-    const id=['canopy','skylight','hatch'][dock];
+    const id=['', 'canopy','skylight','hatch'][dock];
     if(v(id)) score+=10;
   }
   return Math.max(0,score);
@@ -158,6 +158,7 @@ function parse(text){
   return commands;
 }
 function run(){
+  if(state.mode==='match' && state.elapsed>=150){log('Матч окончен. Начните новый матч.');return}
   try{
     state.queue=parse($('editor').value);state.current=null;
     state.robot.velocity=clamp(Number(state.robot.velocity),20,500);
