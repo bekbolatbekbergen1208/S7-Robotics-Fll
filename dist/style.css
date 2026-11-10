@@ -55,7 +55,10 @@ h1 em,.section h2 em{background:linear-gradient(100deg,var(--lime),var(--glow) 5
 .logo-core:before{content:'';position:absolute;inset:-6px;border-radius:50%;box-shadow:0 0 45px 6px rgba(77,255,158,.35);z-index:-1;animation:breathe 4.5s ease-in-out infinite}
 @keyframes breathe{0%,100%{opacity:.35}50%{opacity:1}}
 .core-label,.core-bottom{color:#2d6a4f}
-.logo-core img{clip-path:circle(47%)}
+.logo-core img{mix-blend-mode:normal;filter:drop-shadow(0 6px 10px rgba(20,70,45,.25))}
+.brand-logo{height:28px;width:auto;flex:none;filter:brightness(1.35) saturate(1.25) drop-shadow(0 0 6px rgba(77,255,158,.35))}
+footer .brand-logo{height:23px}
+@media(max-width:650px){.brand-logo{height:21px}}
 
 /* nav cards */
 .team-card{--accent:var(--glow)}
