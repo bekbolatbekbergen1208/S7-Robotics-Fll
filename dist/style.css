@@ -102,3 +102,12 @@ footer .brand-logo{height:23px}
 .values-grid article:nth-child(3n) .value-symbol{color:var(--lime)}
 
 @media(prefers-reduced-motion:reduce){body:after,.logo-core:before,.star,.brand-dot,.eyebrow span{animation:none!important}}
+
+.team-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:clamp(10px,1.4vw,24px);align-items:start}
+.team-grid .member{min-width:0;padding:0;background:transparent;border:0;box-shadow:none;text-align:center}
+.team-grid .portrait{height:auto;aspect-ratio:190/289;border-radius:12%;display:block}
+.portrait img{display:block;height:100%;width:100%;object-fit:cover}
+.team-grid .member h3{background:#faf9f7;color:#232022;border-radius:9px;margin:12px 0 0;padding:7px 3px;line-height:1.25}
+.member h3 span{display:block}
+@media(max-width:900px){.team-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:600px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
