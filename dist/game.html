@@ -10,11 +10,12 @@
 <link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap">
+<script src="simulator/theme/isolation.js" data-sw="coi-sw.js"></script>
 <style>
-:root{--bg:#03110c;--ink:#e8fff2;--text:#a8cdbb;--dim:#7fa897;--glow:#4dff9e;--lime:#b8ff5e;--teal:#2fe3c6;--line:rgba(120,255,185,.15);--card:linear-gradient(140deg,rgba(22,66,48,.55),rgba(5,24,18,.4));--display:'Space Grotesk',system-ui,sans-serif;color-scheme:dark}
+:root{--bg:#03110c;--ink:#e8fff2;--text:#a8cdbb;--dim:#7fa897;--glow:#4dff9e;--lime:#b8ff5e;--teal:#2fe3c6;--line:rgba(120,255,185,.15);--card:linear-gradient(140deg,rgba(22,66,48,.55),rgba(5,24,18,.4));--display:'Space Grotesk','Manrope',system-ui,sans-serif;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;background:radial-gradient(ellipse 60% 50% at 8% 12%,rgba(46,230,150,.15),transparent 70%),radial-gradient(ellipse 55% 50% at 95% 90%,rgba(47,227,198,.12),transparent 70%),linear-gradient(160deg,#03110c,#051a13 55%,#020d09);background-color:var(--bg);background-attachment:fixed}
+body{margin:0;color:var(--ink);font-family:'DM Sans','Manrope',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;background:radial-gradient(ellipse 60% 50% at 8% 12%,rgba(46,230,150,.15),transparent 70%),radial-gradient(ellipse 55% 50% at 95% 90%,rgba(47,227,198,.12),transparent 70%),linear-gradient(160deg,#03110c,#051a13 55%,#020d09);background-color:var(--bg);background-attachment:fixed}
 body:before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:linear-gradient(rgba(120,255,190,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(120,255,190,.045) 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(#000,transparent 85%)}
 body:after{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:radial-gradient(circle,rgba(130,255,190,.9) 0 1px,transparent 2px),radial-gradient(circle,rgba(184,255,94,.7) 0 1px,transparent 2px),radial-gradient(circle,rgba(47,227,198,.8) 0 1.5px,transparent 2.5px);background-size:230px 230px,310px 310px,420px 420px;background-position:20px 40px,140px 190px,260px 90px;opacity:.4;animation:plankton 9s ease-in-out infinite alternate}
 @keyframes plankton{from{opacity:.2;transform:translateY(0)}to{opacity:.5;transform:translateY(-14px)}}
@@ -26,7 +27,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--glow);outline-offse
 .brand{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;letter-spacing:1.2px;text-decoration:none}
 .brand img{height:24px;width:auto;filter:brightness(1.35) saturate(1.25) drop-shadow(0 0 6px rgba(77,255,158,.35))}
 .label{font-size:12px;letter-spacing:.4px;color:var(--dim)}
-.pill{display:inline-flex;align-items:center;gap:6px;color:#9dffc9;text-decoration:none;font:500 13px/1 'DM Sans',sans-serif;border:1px solid rgba(77,255,158,.3);border-radius:999px;padding:10px 16px;background:rgba(77,255,158,.06);cursor:pointer;transition:border-color .2s,box-shadow .2s,color .2s,background .2s}
+.pill{display:inline-flex;align-items:center;gap:6px;color:#9dffc9;text-decoration:none;font:500 13px/1 'DM Sans','Manrope',sans-serif;border:1px solid rgba(77,255,158,.3);border-radius:999px;padding:10px 16px;background:rgba(77,255,158,.06);cursor:pointer;transition:border-color .2s,box-shadow .2s,color .2s,background .2s}
 .pill:hover{border-color:var(--glow);color:var(--glow);box-shadow:0 0 20px rgba(77,255,158,.2)}
 .pill.solid{background:var(--glow);border-color:var(--glow);color:#03140d;font-weight:700;box-shadow:0 0 22px rgba(77,255,158,.35)}
 .pill.solid:hover{color:#03140d;box-shadow:0 0 30px rgba(77,255,158,.55)}
@@ -54,7 +55,7 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--lime),var(--glow
 .sim-bar .hint{font-size:12px;color:var(--dim)}
 .sim-bar .pill{padding:8px 13px;font-size:12px}
 #fullscreen{margin-left:auto}
-iframe{display:block;width:100%;height:calc(100svh - 150px);min-height:560px;border:0;background:#111317}
+iframe{display:block;width:100%;height:calc(100svh - 150px);min-height:560px;border:0;background:#04140f}
 iframe:fullscreen{height:100vh}
 .credit{font-size:12px;color:var(--dim);margin:12px 6px 0}
 .credit a{color:var(--text)}
@@ -95,7 +96,7 @@ iframe:fullscreen{height:100vh}
       <p class="lead">Поле, код и конструктор робота — в симуляторе ниже. Пишем программу, запускаем заезд и смотрим, какие миссии засчитаны.</p>
       <div class="hero-actions">
         <a class="pill solid" href="#simulator-frame">Открыть симулятор ↓</a>
-        <a class="pill" href="https://fll-bioglow-sim.onrender.com/" target="_blank" rel="noopener">В новой вкладке ↗</a>
+        <a class="pill" href="simulator/" target="_blank" rel="noopener">В новой вкладке ↗</a>
       </div>
       <div class="stats">
         <div><b>2:30</b><span>Матч</span></div>
@@ -167,14 +168,14 @@ iframe:fullscreen{height:100vh}
   <section class="sim" id="simulator-frame">
     <div class="sim-frame">
       <div class="sim-bar">
-        <span class="live"><i></i>BIOGLOW SIMULATOR</span>
+        <span class="live"><i></i>BIOGLOW 3D SIMULATOR</span>
         <span class="hint">Поле · код · конструктор робота</span>
         <button class="pill" id="fullscreen" type="button">На весь экран ↗</button>
-        <a class="pill" href="https://fll-bioglow-sim.onrender.com/" target="_blank" rel="noopener">Открыть отдельно ↗</a>
+        <a class="pill" href="simulator/" target="_blank" rel="noopener">Открыть отдельно ↗</a>
       </div>
-      <iframe id="simulator" src="https://fll-bioglow-sim.onrender.com/" title="FLL BIOGLOW — симулятор игры роботов" allow="fullscreen" allowfullscreen loading="lazy"></iframe>
+      <iframe id="simulator" src="simulator/" title="FLL BIOGLOW — симулятор игры роботов" allow="fullscreen; cross-origin-isolated" allowfullscreen loading="lazy"></iframe>
     </div>
-    <p class="credit">Симулятор — открытый проект <a href="https://github.com/AendeGitHub/fll-bioglow-sim" target="_blank" rel="noopener">fll-bioglow-sim</a>. Если долго грузится — сервер просыпается, подождите до минуты.</p>
+    <p class="credit">3D-симулятор BIOGLOW команды S7 Robotics: поле с физикой, 3D-модели миссий, код на Python прямо в браузере и конструктор робота из деталей SPIKE Prime. Первый запуск загружает около 15 МБ.</p>
   </section>
 
   <section class="future">
@@ -194,7 +195,7 @@ iframe:fullscreen{height:100vh}
         <small>01 / РОБОТ</small>
         <h3>Наш робот</h3>
         <p>Сборка завершена. Теперь команда работает над кодом робота.</p>
-        <span class="soon">СКОРО</span>
+        <span class="soon">В РАБОТЕ</span>
       </article>
       <article>
         <svg class="slot-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
