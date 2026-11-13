@@ -19,10 +19,16 @@ export class FieldView {
     this.onDrag = onDrag;
     this.onAttachment = onAttachment;
     this.attGroups = [];
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // S7 performance: the composer renders into its own MSAA target, so the canvas needs no
+    // antialiasing of its own; phones and tablets start without ambient occlusion and with
+    // smaller shadows, and adaptQuality() steps down further if frames get slow.
+    this.lowPower = matchMedia('(pointer: coarse)').matches || Math.min(screen.width, screen.height) < 700;
+    this.quality = this.lowPower ? 1 : 2; // 2: AO + DPR≤1.5, 1: no AO, 0: no AO + DPR 1
+    this.perf = { frames: 0, t0: 0, last: 0 };
+    this.renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
+    this.renderer.setPixelRatio(this.pixelRatio());
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap; // PCFSoftShadowMap is removed in this three.js and fell back to this anyway
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.0;
@@ -57,7 +63,7 @@ export class FieldView {
     const sun = new THREE.DirectionalLight('#fff6e8', 2.1);
     sun.position.set(-60, 220, 120);
     sun.castShadow = true;
-    sun.shadow.mapSize.set(4096, 4096);
+    sun.shadow.mapSize.set(this.lowPower ? 2048 : 4096, this.lowPower ? 2048 : 4096);
     const sc = sun.shadow.camera;
     sc.left = -135; sc.right = 135; sc.top = 80; sc.bottom = -80; sc.near = 50; sc.far = 500;
     sun.shadow.bias = -0.0003;
@@ -133,6 +139,7 @@ export class FieldView {
     this.ao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 12 });
     this.composer.addPass(this.ao);
     this.composer.addPass(new OutputPass());
+    this.ao.enabled = this.quality >= 2;
 
     // redraw the robot with the real LDraw part meshes once they have loaded
     onLDrawReady(() => {
@@ -143,11 +150,44 @@ export class FieldView {
 
     new ResizeObserver(() => this.resize()).observe(container);
     this.resize();
+    // Draw only while the field is on screen: not on the builder / help tabs, and not when the
+    // page embedding the simulator is scrolled away from it.
+    this.onScreen = true;
+    new IntersectionObserver(([e]) => { this.onScreen = e.isIntersecting; }).observe(container);
     const loop = () => {
       requestAnimationFrame(loop);
+      if (!this.onScreen || !container.offsetParent) {
+        this.lastFrame = performance.now();
+        this.perf.frames = 0;
+        return;
+      }
       this.render();
+      this.adaptQuality();
     };
     loop();
+  }
+
+  pixelRatio() {
+    return this.quality >= 1 ? Math.min(window.devicePixelRatio, 1.5) : 1;
+  }
+
+  // Average the frame time over ~2 s of drawing; below 25 fps drop one quality step
+  // (not 30: battery saver caps animation at 30 fps on capable machines).
+  adaptQuality() {
+    const p = this.perf;
+    const now = performance.now();
+    if (p.frames === 0 || now - p.last > 250) { p.t0 = now; p.frames = 0; } // first frame or a pause (tab hidden)
+    p.last = now;
+    p.frames++;
+    const span = now - p.t0;
+    if (span < 2000 || this.quality === 0) return;
+    const ms = span / p.frames;
+    p.frames = 0;
+    if (ms < 40) return;
+    this.quality--;
+    this.ao.enabled = this.quality >= 2;
+    this.renderer.setPixelRatio(this.pixelRatio());
+    this.resize();
   }
 
   resize() {

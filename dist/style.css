@@ -111,3 +111,28 @@ footer .brand-logo{height:23px}
 .member h3 span{display:block}
 @media(max-width:900px){.team-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:600px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ==========================================================
+   Fresh BIOGLOW layer (issue #6). The animated background lives in
+   bioglow-bg.css (.bio-bg). Body gradients with background-attachment:fixed
+   repainted the page on every scroll, and backdrop-filter re-blurred the
+   animated background every frame, so both are dropped here.
+   ========================================================== */
+:root{--card:linear-gradient(140deg,rgba(16,58,42,.74),rgba(4,22,16,.64))}
+body{background:#020d09}
+body:before,body:after{content:none;animation:none}
+.nav-card,.section,.logo-core,.back-link,.page-nav a,.member{-webkit-backdrop-filter:none;backdrop-filter:none}
+.section{position:relative;background:linear-gradient(160deg,rgba(10,42,30,.66),rgba(3,17,12,.58))}
+
+/* gradient edge: a 1px ring that catches the light at two corners */
+.nav-card:after,.section:after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(140deg,color-mix(in srgb,var(--accent) 70%,transparent),transparent 32%,transparent 68%,rgba(47,227,198,.45));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.75;transition:opacity .25s}
+.nav-card:hover:after{opacity:1}
+.section:after{opacity:.55}
+
+/* team: names as dark glass tags instead of white boxes */
+.team-grid .member,.team-grid .member:hover{box-shadow:none;border:0}
+.team-grid .portrait{box-shadow:0 0 0 1px var(--line),0 18px 40px rgba(0,0,0,.35);transition:transform .3s,box-shadow .3s}
+.team-grid .member:hover .portrait{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(77,255,158,.5),0 0 36px rgba(77,255,158,.22),0 18px 40px rgba(0,0,0,.35)}
+.team-grid .member h3{background:linear-gradient(140deg,rgba(16,58,42,.85),rgba(4,22,16,.8));color:var(--ink);border:1px solid var(--line);font-weight:600;transition:border-color .3s}
+.team-grid .member h3 span:first-child{font-size:.78em;font-weight:500;color:var(--text);letter-spacing:.02em}
+.team-grid .member:hover h3{border-color:rgba(77,255,158,.45)}

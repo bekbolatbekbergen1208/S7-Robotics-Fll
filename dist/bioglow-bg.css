@@ -1,0 +1,126 @@
+/*
+ * S7 Robotics — BIOGLOW background, shared by every page.
+ * Markup (first child of <body>):
+ *   <div class="bio-bg" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b><b></b><b></b><b></b><b></b><b></b></div>
+ * Layers: aurora blobs (i), mycelium threads (::before, assets/mycelium.svg),
+ * rising spores (b), grain + vignette (::after).
+ * Performance: one fixed, contained layer; only transform/opacity animate, so
+ * the browser composites it on the GPU and nothing repaints while scrolling.
+ */
+.bio-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: #020d09;
+  contain: strict;
+}
+
+/* aurora */
+.bio-bg > i {
+  position: absolute;
+  width: 72vmax;
+  height: 72vmax;
+  border-radius: 50%;
+  will-change: transform;
+  animation: bio-aurora 32s ease-in-out infinite alternate;
+}
+.bio-bg > i:nth-of-type(1) {
+  left: -24vmax;
+  top: -30vmax;
+  background: radial-gradient(closest-side, rgba(46, 230, 150, 0.32), rgba(46, 230, 150, 0.08) 55%, transparent);
+}
+.bio-bg > i:nth-of-type(2) {
+  right: -28vmax;
+  bottom: -34vmax;
+  background: radial-gradient(closest-side, rgba(47, 227, 198, 0.28), rgba(47, 227, 198, 0.06) 55%, transparent);
+  animation-duration: 38s;
+  animation-delay: -14s;
+}
+.bio-bg > i:nth-of-type(3) {
+  right: -12vmax;
+  top: 4vh;
+  width: 48vmax;
+  height: 48vmax;
+  background: radial-gradient(closest-side, rgba(160, 125, 255, 0.17), transparent);
+  animation-duration: 44s;
+  animation-delay: -22s;
+}
+.bio-bg > i:nth-of-type(4) {
+  left: 8vw;
+  bottom: -38vmax;
+  width: 58vmax;
+  height: 58vmax;
+  background: radial-gradient(closest-side, rgba(184, 255, 94, 0.13), transparent);
+  animation-duration: 40s;
+  animation-delay: -8s;
+}
+@keyframes bio-aurora {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(7vmax, 4vmax, 0) scale(1.12); }
+  100% { transform: translate3d(-4vmax, 8vmax, 0) scale(0.94); }
+}
+
+/* mycelium */
+.bio-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url(assets/mycelium.svg) center / cover no-repeat;
+  opacity: 0.6;
+  animation: bio-breathe 9s ease-in-out infinite alternate;
+}
+@keyframes bio-breathe {
+  from { opacity: 0.42; }
+  to { opacity: 0.75; }
+}
+
+/* spores */
+.bio-bg > b {
+  position: absolute;
+  bottom: -12px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #b8ffd8;
+  box-shadow: 0 0 10px 2px rgba(77, 255, 158, 0.7);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: bio-rise 26s linear infinite;
+}
+.bio-bg > b:nth-of-type(1) { left: 8%; animation-delay: -2s; }
+.bio-bg > b:nth-of-type(2) { left: 23%; animation-duration: 32s; animation-delay: -15s; width: 3px; height: 3px; }
+.bio-bg > b:nth-of-type(3) { left: 41%; animation-duration: 29s; animation-delay: -7s; background: #e9ffc9; box-shadow: 0 0 10px 2px rgba(184, 255, 94, 0.65); }
+.bio-bg > b:nth-of-type(4) { left: 62%; animation-duration: 35s; animation-delay: -21s; width: 3px; height: 3px; }
+.bio-bg > b:nth-of-type(5) { left: 78%; animation-duration: 27s; animation-delay: -11s; background: #d6fff8; box-shadow: 0 0 10px 2px rgba(47, 227, 198, 0.7); }
+.bio-bg > b:nth-of-type(6) { left: 92%; animation-duration: 33s; animation-delay: -26s; background: #ece4ff; box-shadow: 0 0 10px 2px rgba(169, 139, 255, 0.6); }
+@keyframes bio-rise {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  10% { opacity: 0.9; }
+  50% { transform: translate3d(3vw, -55vh, 0); opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% { transform: translate3d(-2vw, -110vh, 0); opacity: 0; }
+}
+
+/* grain + vignette */
+.bio-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 45%, transparent 55%, rgba(1, 8, 5, 0.65)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .7 0 0 0 0 1 0 0 0 0 .85 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.9;
+}
+
+@media (max-width: 700px) {
+  .bio-bg > i { width: 110vmax; height: 110vmax; }
+  .bio-bg > b:nth-of-type(n + 5) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bio-bg > i,
+  .bio-bg > b,
+  .bio-bg::before { animation: none; }
+  .bio-bg > b { display: none; }
+}
