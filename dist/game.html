@@ -11,19 +11,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="bioglow-bg.css?v=1">
 <script src="simulator/theme/isolation.js" data-sw="coi-sw.js"></script>
 <style>
-:root{--bg:#03110c;--ink:#e8fff2;--text:#a8cdbb;--dim:#7fa897;--glow:#4dff9e;--lime:#b8ff5e;--teal:#2fe3c6;--line:rgba(120,255,185,.15);--card:linear-gradient(140deg,rgba(22,66,48,.55),rgba(5,24,18,.4));--display:'Space Grotesk','Manrope',system-ui,sans-serif;color-scheme:dark}
+:root{--bg:#03110c;--ink:#e8fff2;--text:#a8cdbb;--dim:#7fa897;--glow:#4dff9e;--lime:#b8ff5e;--teal:#2fe3c6;--line:rgba(120,255,185,.15);--card:linear-gradient(140deg,rgba(16,58,42,.74),rgba(4,22,16,.64));--display:'Space Grotesk','Manrope',system-ui,sans-serif;color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;color:var(--ink);font-family:'DM Sans','Manrope',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;background:radial-gradient(ellipse 60% 50% at 8% 12%,rgba(46,230,150,.15),transparent 70%),radial-gradient(ellipse 55% 50% at 95% 90%,rgba(47,227,198,.12),transparent 70%),linear-gradient(160deg,#03110c,#051a13 55%,#020d09);background-color:var(--bg);background-attachment:fixed}
-body:before{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:linear-gradient(rgba(120,255,190,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(120,255,190,.045) 1px,transparent 1px);background-size:70px 70px;mask-image:linear-gradient(#000,transparent 85%)}
-body:after{content:'';position:fixed;inset:0;pointer-events:none;z-index:-1;background-image:radial-gradient(circle,rgba(130,255,190,.9) 0 1px,transparent 2px),radial-gradient(circle,rgba(184,255,94,.7) 0 1px,transparent 2px),radial-gradient(circle,rgba(47,227,198,.8) 0 1.5px,transparent 2.5px);background-size:230px 230px,310px 310px,420px 420px;background-position:20px 40px,140px 190px,260px 90px;opacity:.4;animation:plankton 9s ease-in-out infinite alternate}
-@keyframes plankton{from{opacity:.2;transform:translateY(0)}to{opacity:.5;transform:translateY(-14px)}}
+body{margin:0;color:var(--ink);font-family:'DM Sans','Manrope',system-ui,sans-serif;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;background:#020d09}
 a{color:inherit}
 a:focus-visible,button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
 
 /* toolbar */
-.toolbar{position:sticky;top:0;z-index:5;min-height:64px;display:flex;align-items:center;gap:20px;padding:12px 24px;background:rgba(4,20,14,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.toolbar{position:sticky;top:0;z-index:5;min-height:64px;display:flex;align-items:center;gap:20px;padding:12px 24px;background:rgba(2,13,9,.97);border-bottom:1px solid var(--line)}
 .brand{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;letter-spacing:1.2px;text-decoration:none}
 .brand img{height:24px;width:auto;filter:brightness(1.35) saturate(1.25) drop-shadow(0 0 6px rgba(77,255,158,.35))}
 .label{font-size:12px;letter-spacing:.4px;color:var(--dim)}
@@ -47,7 +45,7 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--lime),var(--glow
 
 /* simulator frame */
 .sim{max-width:1600px;margin:0 auto;padding:0 24px}
-.sim-frame{border:1px solid rgba(77,255,158,.28);border-radius:22px;overflow:hidden;background:rgba(4,20,14,.6);box-shadow:0 0 0 1px rgba(77,255,158,.06),0 0 60px rgba(77,255,158,.12),0 30px 80px rgba(0,0,0,.45)}
+.sim-frame{position:relative;border:1px solid rgba(77,255,158,.28);border-radius:22px;overflow:hidden;background:rgba(4,20,14,.6);box-shadow:0 0 0 1px rgba(77,255,158,.06),0 0 60px rgba(77,255,158,.12),0 30px 80px rgba(0,0,0,.45)}
 .sim-bar{display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid var(--line);background:linear-gradient(90deg,rgba(22,66,48,.6),rgba(4,20,14,.4))}
 .live{display:flex;align-items:center;gap:8px;font:600 12px/1 var(--display);letter-spacing:1.6px}
 .live i{width:8px;height:8px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px var(--glow);animation:blink 1.6s ease-in-out infinite}
@@ -55,8 +53,23 @@ h1 em{font-style:normal;background:linear-gradient(100deg,var(--lime),var(--glow
 .sim-bar .hint{font-size:12px;color:var(--dim)}
 .sim-bar .pill{padding:8px 13px;font-size:12px}
 #fullscreen{margin-left:auto}
-iframe{display:block;width:100%;height:calc(100svh - 150px);min-height:560px;border:0;background:#04140f}
+iframe,.sim-stage{display:block;width:100%;height:calc(100svh - 150px);min-height:560px;border:0;background:#04140f}
+.sim-stage{position:relative;overflow:hidden}
+.sim-poster{position:absolute;inset:0;width:100%;padding:0;border:0;background:#04140f;color:inherit;font:inherit;cursor:pointer;display:grid;place-items:center;text-align:center}
+.sim-poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;filter:saturate(1.1);transition:opacity .4s,transform 1.2s}
+.sim-poster:after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(2,13,9,.25),rgba(2,13,9,.85))}
+.sim-poster:hover img{opacity:.62;transform:scale(1.02)}
+.poster-inner{position:relative;z-index:1;display:grid;justify-items:center;gap:18px;padding:24px}
+.play{position:relative;width:96px;height:96px;border-radius:50%;display:grid;place-items:center;background:var(--glow);color:#03140d;box-shadow:0 0 0 10px rgba(77,255,158,.15),0 0 60px rgba(77,255,158,.55);transition:transform .25s}
+.play:before{content:'';position:absolute;inset:-10px;border-radius:50%;border:2px solid rgba(77,255,158,.5);animation:ring 2.2s ease-out infinite}
+@keyframes ring{from{transform:scale(1);opacity:.9}to{transform:scale(1.5);opacity:0}}
+.play svg{width:38px;height:38px;margin-left:5px}
+.sim-poster:hover .play{transform:scale(1.06)}
+.poster-inner b{font:600 clamp(22px,2.4vw,30px)/1.15 var(--display);letter-spacing:-.02em}
+.poster-inner small{max-width:440px;font-size:14px;color:var(--text)}
 iframe:fullscreen{height:100vh}
+.sim-frame:after,.slots article:after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(140deg,rgba(77,255,158,.7),transparent 32%,transparent 68%,rgba(47,227,198,.45));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.6;transition:opacity .25s}
+.slots article:hover:after{opacity:1}
 .credit{font-size:12px;color:var(--dim);margin:12px 6px 0}
 .credit a{color:var(--text)}
 
@@ -77,11 +90,12 @@ iframe:fullscreen{height:100vh}
 .soon{display:inline-block;margin-top:auto;font-size:11px;letter-spacing:1.2px;color:#9dffc9;border:1px dashed rgba(77,255,158,.35);border-radius:999px;padding:5px 11px}
 
 @media(max-width:900px){.hero{grid-template-columns:1fr;gap:20px;padding:36px 20px 28px}.scene{max-width:520px;margin:0 auto}.slots{grid-template-columns:1fr}.future{padding:56px 20px 64px}}
-@media(max-width:700px){.toolbar{padding:10px 14px;gap:10px}.label{display:none}.brand{font-size:13px}.toolbar .pill{padding:8px 11px;font-size:12px}.sim{padding:0 10px}.sim-frame{border-radius:16px}.sim-bar{flex-wrap:wrap;gap:8px 10px}.sim-bar .hint{display:none}iframe{height:78svh}.lead{font-size:15px}.stats{gap:20px}.stats b{font-size:22px}}
+@media(max-width:700px){.toolbar{padding:10px 14px;gap:10px}.label{display:none}.brand{font-size:13px}.toolbar .pill{padding:8px 11px;font-size:12px}.sim{padding:0 10px}.sim-frame{border-radius:16px}.sim-bar{flex-wrap:wrap;gap:8px 10px}.sim-bar .hint{display:none}iframe,.sim-stage{height:78svh}.play{width:76px;height:76px}.play svg{width:30px;height:30px}.lead{font-size:15px}.stats{gap:20px}.stats b{font-size:22px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<div class="bio-bg" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b><b></b><b></b><b></b><b></b><b></b></div>
 <header class="toolbar">
   <a class="brand" href="index.html" aria-label="S7 Robotics — главная"><img src="assets/brand-logo.png" alt="" width="46" height="24">S7 ROBOTICS</a>
   <span class="label">Our Robo Game · BIOGLOW</span>
@@ -95,7 +109,7 @@ iframe:fullscreen{height:100vh}
       <h1>Our Robo <em>Game</em></h1>
       <p class="lead">Поле, код и конструктор робота — в симуляторе ниже. Пишем программу, запускаем заезд и смотрим, какие миссии засчитаны.</p>
       <div class="hero-actions">
-        <a class="pill solid" href="#simulator-frame">Открыть симулятор ↓</a>
+        <a class="pill solid" href="#simulator-frame" id="heroStart">Открыть симулятор ↓</a>
         <a class="pill" href="simulator/" target="_blank" rel="noopener">В новой вкладке ↗</a>
       </div>
       <div class="stats">
@@ -173,9 +187,18 @@ iframe:fullscreen{height:100vh}
         <button class="pill" id="fullscreen" type="button">На весь экран ↗</button>
         <a class="pill" href="simulator/" target="_blank" rel="noopener">Открыть отдельно ↗</a>
       </div>
-      <iframe id="simulator" src="simulator/" title="FLL BIOGLOW — симулятор игры роботов" allow="fullscreen; cross-origin-isolated" allowfullscreen loading="lazy"></iframe>
+      <div class="sim-stage" id="simStage">
+        <button class="sim-poster" id="simStart" type="button">
+          <img src="assets/sim-poster.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async">
+          <span class="poster-inner">
+            <span class="play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></svg></span>
+            <b>Запустить 3D-симулятор</b>
+            <small>Поле с физикой, код на Python и конструктор робота. Первый запуск загружает около 15 МБ, дальше открывается из кэша.</small>
+          </span>
+        </button>
+      </div>
     </div>
-    <p class="credit">3D-симулятор BIOGLOW команды S7 Robotics: поле с физикой, 3D-модели миссий, код на Python прямо в браузере и конструктор робота из деталей SPIKE Prime. Первый запуск загружает около 15 МБ.</p>
+    <p class="credit">3D-симулятор BIOGLOW команды S7 Robotics: поле с физикой, 3D-модели миссий, код на Python прямо в браузере и конструктор робота из деталей SPIKE Prime.</p>
   </section>
 
   <section class="future">
@@ -237,12 +260,45 @@ document.querySelectorAll('.mission').forEach(g => {
   const p = route.getPointAtLength(len * parseFloat(g.dataset.t));
   g.setAttribute('transform', `translate(${p.x} ${p.y})`);
 });
-// SMIL ignores CSS reduced-motion, so pause it explicitly
-if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.querySelectorAll('svg').forEach(s => s.pauseAnimations && s.pauseAnimations());
+
+// SMIL ignores CSS reduced-motion, so pause it explicitly; otherwise run SVG animations only while on screen
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const svgs = document.querySelectorAll('svg.scene, svg.slot-icon');
+if (reduced) svgs.forEach(s => s.pauseAnimations());
+else {
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? e.target.unpauseAnimations() : e.target.pauseAnimations()));
+  svgs.forEach(s => io.observe(s));
+}
+
+// The simulator (~15 MB, WebGL) loads on demand instead of with the page.
+const stage = document.getElementById('simStage');
+const SEEN = 's7-sim-started';
+function startSim() {
+  let frame = document.getElementById('simulator');
+  if (frame) return frame;
+  frame = document.createElement('iframe');
+  frame.id = 'simulator';
+  frame.src = 'simulator/';
+  frame.title = 'FLL BIOGLOW — 3D-симулятор игры роботов';
+  frame.allow = 'fullscreen; cross-origin-isolated';
+  frame.allowFullscreen = true;
+  stage.replaceWith(frame);
+  try { localStorage.setItem(SEEN, '1'); } catch {}
+  return frame;
+}
+document.getElementById('simStart').addEventListener('click', () => startSim().focus());
+document.getElementById('heroStart').addEventListener('click', () => startSim());
 document.getElementById('fullscreen').addEventListener('click', async () => {
-  const frame = document.getElementById('simulator');
+  const frame = startSim();
   try { await frame.requestFullscreen(); } catch { window.open(frame.src, '_blank', 'noopener'); }
 });
+// Returning visitors have the files cached: start as soon as the frame scrolls into view.
+let seen = false;
+try { seen = localStorage.getItem(SEEN) === '1'; } catch {}
+if (seen) {
+  const auto = new IntersectionObserver(([e]) => { if (e.isIntersecting) { auto.disconnect(); startSim(); } }, { rootMargin: '200px' });
+  auto.observe(stage);
+}
 </script>
 </body>
 </html>

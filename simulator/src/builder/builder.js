@@ -112,7 +112,7 @@ export class RobotBuilder {
   // ---------------------------------------------------------------------------------------------
   initScene() {
     const r = new THREE.WebGLRenderer({ antialias: true });
-    r.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    r.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // S7: 1.5 is sharp enough with MSAA and ~45% fewer pixels than 2
     r.outputColorSpace = THREE.SRGBColorSpace;
     r.toneMapping = THREE.ACESFilmicToneMapping;
     r.shadowMap.enabled = true;
@@ -212,9 +212,12 @@ export class RobotBuilder {
     window.addEventListener('keydown', (e) => this.onKey(e));
     new ResizeObserver(() => this.resize()).observe(this.viewEl);
     this.resize();
+    // S7: also skip drawing while the builder is scrolled out of view on the embedding page
+    this.onScreen = true;
+    new IntersectionObserver(([e]) => { this.onScreen = e.isIntersecting; }).observe(this.viewEl);
     const loop = () => {
       requestAnimationFrame(loop);
-      if (!this.viewEl.offsetParent) return;
+      if (!this.viewEl.offsetParent || !this.onScreen) return;
       this.controls.update();
       this.renderer.render(this.scene, this.camera);
     };
