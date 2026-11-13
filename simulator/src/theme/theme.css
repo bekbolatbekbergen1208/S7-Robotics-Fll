@@ -1,0 +1,457 @@
+/*
+ * S7 Robotics BIOGLOW theme for the 3D simulator.
+ * Loaded after the simulator's own styles.css: only colours, borders, glow and
+ * fonts change; layout and scripts are the simulator's own. Matches the team
+ * site (dist/style.css): deep green background, neon green / lime / teal glow.
+ * --re-scene / --re-builder / --sim-* are read once by the 3D scenes.
+ */
+
+/* ---------- Fonts: DM Sans + Space Grotesk like the site, Manrope fills in Cyrillic ---------- */
+
+@font-face {
+  font-family: 'S7 Sans';
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(./fonts/dmsans-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'S7 Sans';
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(./fonts/manrope-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'S7 Display';
+  font-weight: 500 700;
+  font-display: swap;
+  src: url(./fonts/spacegrotesk-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'S7 Display';
+  font-weight: 500 800;
+  font-display: swap;
+  src: url(./fonts/manrope-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* ---------- Tokens ---------- */
+
+:root,
+:root[data-theme] {
+  --glow: #4dff9e;
+  --glow-soft: rgba(77, 255, 158, 0.12);
+  --glow-line: rgba(77, 255, 158, 0.35);
+  --teal: #2fe3c6;
+  --re-accent: #4dff9e;
+  --re-accent-hover: #7dffb8;
+  --re-on-accent: #03140d;
+  --re-code-bg: #020c08;
+  --re-code-text: #dfffee;
+  --re-run: #b8ff5e;
+  --re-on-run: #0b1a05;
+  --re-shadow: rgba(0, 0, 0, 0.45);
+
+  --bg: #03110c;
+  --panel: #061a13;
+  --panel2: #0b281d;
+  --line: rgba(120, 255, 185, 0.14);
+  --text: #e8fff2;
+  --muted: #8fb5a3;
+  --lime: #b8ff5e; /* the simulator's heading / accent colour */
+  --green: #4dff9e;
+  --blue: #6fe3ff;
+  --orange: #ffd98a;
+  --red: #ff7a6b;
+  --re-outline: rgba(120, 255, 185, 0.2);
+  --re-overlay: rgba(3, 17, 12, 0.88);
+  --re-accent-soft: rgba(77, 255, 158, 0.1);
+  --re-ok-bg: rgba(77, 255, 158, 0.1);
+  --re-ok-border: rgba(77, 255, 158, 0.55);
+  --re-chip: #0f3226;
+  --re-danger-bg: rgba(255, 106, 90, 0.12);
+  --re-danger-text: #ff9b8c;
+  --re-warn-bg: rgba(255, 217, 138, 0.1);
+  --re-warn-text: #ffd98a;
+
+  /* 3D scenes */
+  --re-scene: #04140f;
+  --re-builder: #061a13;
+  --sim-floor: #06231a;
+  --sim-leg: #0d3326;
+  --sim-ground: #0e3a2a;
+  --sim-fill: #9dffd0;
+
+  --font-ui: 'S7 Sans', 'DM Sans', 'Manrope', system-ui, sans-serif;
+  --font-display: 'S7 Display', 'Space Grotesk', 'Manrope', system-ui, sans-serif;
+  color-scheme: dark;
+  font-family: var(--font-ui);
+}
+
+html,
+body {
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(46, 230, 150, 0.08), transparent 70%), var(--bg);
+}
+::selection {
+  background: rgba(77, 255, 158, 0.35);
+  color: #fff;
+}
+* {
+  scrollbar-color: #1f5c44 transparent;
+}
+:focus-visible {
+  outline: 2px solid var(--glow);
+  outline-offset: 2px;
+}
+
+/* ---------- Top bar ---------- */
+
+.topbar {
+  background: linear-gradient(90deg, rgba(14, 48, 35, 0.95), rgba(4, 20, 14, 0.95));
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 24px rgba(77, 255, 158, 0.08);
+}
+.brand img {
+  height: 30px;
+  border-radius: 0;
+  filter: brightness(1.3) saturate(1.2) drop-shadow(0 0 6px rgba(77, 255, 158, 0.4));
+}
+.brand-title {
+  color: var(--text);
+  font-family: var(--font-display);
+  letter-spacing: 1.2px;
+}
+.brand-sub {
+  color: var(--muted);
+}
+.tab {
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.tab.active {
+  background: var(--glow);
+  color: var(--re-on-accent);
+  border: 1px solid var(--glow);
+  box-shadow: 0 0 22px rgba(77, 255, 158, 0.4);
+}
+.tab:hover:not(.active) {
+  background: var(--glow-soft);
+  color: var(--text);
+}
+.timer,
+.timer.running {
+  font-family: var(--font-display);
+  color: var(--text);
+}
+.timer.running {
+  color: var(--lime);
+  text-shadow: 0 0 14px rgba(184, 255, 94, 0.55);
+}
+.tokens span {
+  background: var(--glow);
+  box-shadow: 0 0 8px rgba(77, 255, 158, 0.6);
+}
+.tokens span.lost {
+  background: #12392b;
+  box-shadow: none;
+}
+.score-big {
+  font-family: var(--font-display);
+  background: var(--glow-soft);
+  color: var(--glow);
+  border: 1px solid var(--glow-line);
+  border-radius: 14px;
+  box-shadow: 0 0 24px rgba(77, 255, 158, 0.18), inset 0 0 18px rgba(77, 255, 158, 0.08);
+  text-shadow: 0 0 14px rgba(77, 255, 158, 0.5);
+}
+.score-big small {
+  color: var(--muted);
+  text-shadow: none;
+}
+
+/* ---------- Buttons and inputs ---------- */
+
+.btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--re-outline);
+  border-radius: 10px;
+  box-shadow: none;
+  font-weight: 600;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+}
+.btn:hover {
+  background: var(--glow-soft);
+  border-color: var(--glow-line);
+  box-shadow: 0 0 16px rgba(77, 255, 158, 0.15);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn.primary,
+.btn.primary:hover {
+  background: var(--re-accent);
+  border-color: var(--re-accent);
+  color: var(--re-on-accent);
+  box-shadow: 0 0 20px rgba(77, 255, 158, 0.35);
+}
+.btn.primary:hover {
+  background: var(--re-accent-hover);
+}
+.btn.run,
+.btn.run:hover {
+  background: var(--re-run);
+  border-color: var(--re-run);
+  color: var(--re-on-run);
+  box-shadow: 0 0 20px rgba(184, 255, 94, 0.35);
+}
+.btn.stop,
+.btn.stop:hover {
+  background: var(--re-danger-bg);
+  border-color: rgba(255, 122, 107, 0.4);
+  color: var(--re-danger-text);
+}
+.btn.warn,
+.btn.warn:hover {
+  background: var(--re-warn-bg);
+  border-color: rgba(255, 217, 138, 0.35);
+  color: var(--re-warn-text);
+}
+.btn.toggle {
+  color: var(--muted);
+}
+.btn.toggle.on {
+  background: var(--re-accent-soft);
+  border-color: var(--glow-line);
+  color: var(--glow);
+}
+.icon-btn {
+  border: 1px solid var(--re-outline);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+.icon-btn:hover {
+  background: var(--glow-soft);
+  border-color: var(--glow-line);
+  color: var(--glow);
+}
+select,
+.palette input[type='search'],
+.props .att-in,
+.xyz input {
+  background: var(--panel);
+  border: 1px solid var(--re-outline);
+  border-radius: 8px;
+  color: var(--text);
+}
+select:hover,
+select:focus {
+  border-color: var(--glow-line);
+}
+.seg {
+  border: 1px solid var(--re-outline);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.seg button.on,
+.part-btn.active {
+  background: var(--re-accent);
+  border-color: var(--re-accent);
+  color: var(--re-on-accent);
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(77, 255, 158, 0.35);
+}
+.part-btn canvas {
+  background: var(--panel2);
+}
+.swatches button.on {
+  border-color: var(--glow);
+  box-shadow: 0 0 10px rgba(77, 255, 158, 0.5);
+}
+
+/* ---------- Panels ---------- */
+
+.code-panel,
+.score-panel,
+.palette,
+.props {
+  background: var(--panel);
+  border-color: var(--line);
+  border-width: 1px;
+}
+.field-toolbar {
+  background: rgba(6, 26, 19, 0.7);
+  border-bottom: 1px solid var(--line);
+}
+.console {
+  background: var(--re-code-bg);
+  color: var(--re-code-text);
+  border-top: 1px solid var(--line);
+}
+.console .info {
+  color: var(--lime);
+}
+.console .sys {
+  color: var(--muted);
+}
+.console .err {
+  color: #ff9b8c;
+}
+
+/* Cards floating over the 3D field */
+.hud-card,
+.hint,
+.builder-hint,
+.att-panel,
+.results {
+  background: var(--re-overlay);
+  border: 1px solid var(--glow-line);
+  border-radius: 12px;
+  color: var(--text);
+  box-shadow: 0 0 30px rgba(77, 255, 158, 0.1), 0 12px 30px var(--re-shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.hint,
+.builder-hint {
+  color: var(--muted);
+}
+.loading {
+  background: var(--re-overlay);
+  color: var(--text);
+}
+.spinner {
+  border-color: rgba(77, 255, 158, 0.15);
+  border-top-color: var(--glow);
+  filter: drop-shadow(0 0 6px rgba(77, 255, 158, 0.6));
+}
+
+/* Attachments and results */
+.ap-list li.on,
+.res-total {
+  background: var(--re-ok-bg);
+  border-color: var(--re-ok-border);
+}
+.res-list.fouls li {
+  background: var(--re-danger-bg);
+}
+.res-list.fouls li b {
+  color: var(--re-danger-text);
+}
+.res-num,
+.m-num,
+.m-item .v.yes {
+  background: var(--glow);
+  color: var(--re-on-accent);
+}
+.res-total b {
+  color: var(--glow);
+}
+
+/* Score sheet */
+.m-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: linear-gradient(140deg, rgba(22, 66, 48, 0.4), rgba(5, 24, 18, 0.3));
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.m-card.scored {
+  border-color: var(--re-ok-border);
+  box-shadow: 0 0 22px rgba(77, 255, 158, 0.14);
+}
+.m-head {
+  background: var(--re-ok-bg);
+}
+.m-card:not(.scored) .m-head {
+  background: rgba(255, 255, 255, 0.02);
+}
+.m-item .v {
+  background: var(--re-chip);
+}
+.m-item .v.no {
+  background: var(--re-danger-bg);
+  color: var(--re-danger-text);
+}
+.m-item .t {
+  color: var(--text);
+}
+
+/* Help */
+.help h1,
+.help h2 {
+  font-family: var(--font-display);
+  color: var(--glow);
+}
+.help code,
+.help pre {
+  background: var(--re-code-bg);
+  color: var(--re-code-text);
+}
+.help th {
+  background: var(--panel2);
+}
+
+/* Studio model viewer */
+.studio-overlay {
+  background: rgba(2, 12, 8, 0.86);
+}
+.studio-window {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--glow-line);
+  box-shadow: 0 0 40px rgba(77, 255, 158, 0.12), 0 20px 60px var(--re-shadow);
+}
+.studio-head {
+  background: var(--panel2);
+  border-bottom: 1px solid var(--line);
+}
+.studio-info {
+  background: var(--panel);
+  color: var(--text);
+  border-left: 1px solid var(--line);
+}
+.studio-info p {
+  color: var(--muted);
+}
+.studio-view {
+  background: var(--bg);
+}
+@media (max-width: 700px) {
+  .studio-info {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* Line icons (src/theme/icons.js) in place of emoji. */
+.re-ico {
+  width: 1.1em;
+  height: 1.1em;
+  flex: none;
+  vertical-align: -0.18em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tab .re-ico,
+.btn .re-ico,
+.icon-btn .re-ico {
+  margin-right: 0.15em;
+}
+.icon-btn .re-ico {
+  margin-right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
